@@ -1,15 +1,16 @@
+import { goto } from '@sveltejs/kit';
 <script>
   let email = '';
   let password = '';
   let errorMessage = '';
   let successMessage = '';
 
-  // Handle sign up form submission
+  // Handle sign in form submission
   async function handleSubmit() {
     errorMessage = '';
     successMessage = '';
 
-    const response = await fetch('/api/register', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +19,8 @@
     });
 
     if (response.ok) {
-      successMessage = 'User registered successfully!';
+      successMessage = 'Login successful!';
+      goto('/dashboard');
     } else {
       const data = await response.json();
       errorMessage = data.error || 'An error occurred';
@@ -27,7 +29,7 @@
 </script>
 
 <div class="max-w-md mx-auto p-4 mt-8">
-  <h2 class="text-2xl font-semibold text-center">Sign Up</h2>
+  <h2 class="text-2xl font-semibold text-center">Sign In</h2>
 
   <!-- Display success or error messages -->
   {#if successMessage}
@@ -64,12 +66,12 @@
       type="submit"
       class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
     >
-      Sign Up
+      Sign In
     </button>
   </form>
 
   <p class="mt-4 text-center text-sm">
-    Already have an account? <a href="/signin" class="text-blue-500 hover:underline">Sign In</a>
+    Don't have an account? <a href="/signup" class="text-blue-500 hover:underline">Sign Up</a>
   </p>
 </div>
 
