@@ -1,75 +1,41 @@
 <script>
-  let email = '';
-  let password = '';
-  let errorMessage = '';
-  let successMessage = '';
+	let email = '';
+	let password = '';
+	let errorMessage = '';
+	let successMessage = '';
 
-  // Handle sign up form submission
-  async function handleSubmit() {
-    errorMessage = '';
-    successMessage = '';
+	async function handleSubmit() {
+		errorMessage = '';
+		successMessage = '';
 
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+		const response = await fetch('/api/login', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email, password })
+		});
 
-    if (response.ok) {
-      successMessage = 'User registered successfully!';
-    } else {
-      const data = await response.json();
-      errorMessage = data.error || 'An error occurred';
-    }
-  }
+		if (response.ok) {
+			successMessage = 'Login successful!';
+		} else {
+			const data = await response.json();
+			errorMessage = data.error || 'An error occurred';
+		}
+	}
 </script>
 
-<div class="max-w-md mx-auto p-4 mt-8">
-  <h2 class="text-2xl font-semibold text-center">Sign Up</h2>
+<div class="mx-auto mt-8 max-w-md rounded bg-gray-900 p-4 text-gray-200 shadow-lg">
+	<h1 class="mb-2 p-4 text-center text-3xl font-bold">Murali Saree Emporium Inventory System</h1>
+	<div class="m-2 grid grid-cols-2 p-4">
+		<a
+			href="/signup"
+			class="m-4 block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+			>Don't have an Account? Sign Up</a
+		>
 
-  <!-- Display success or error messages -->
-  {#if successMessage}
-    <div class="bg-green-500 text-white p-3 my-3 rounded">{successMessage}</div>
-  {/if}
-  {#if errorMessage}
-    <div class="bg-red-500 text-white p-3 my-3 rounded">{errorMessage}</div>
-  {/if}
-
-  <form on:submit|preventDefault={handleSubmit}>
-    <div class="mb-4">
-      <label for="email" class="block text-sm font-medium">Email</label>
-      <input
-        id="email"
-        type="email"
-        bind:value={email}
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-        required
-      />
-    </div>
-
-    <div class="mb-6">
-      <label for="password" class="block text-sm font-medium">Password</label>
-      <input
-        id="password"
-        type="password"
-        bind:value={password}
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-        required
-      />
-    </div>
-
-    <button
-      type="submit"
-      class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    >
-      Sign Up
-    </button>
-  </form>
-
-  <p class="mt-4 text-center text-sm">
-    Already have an account? <a href="/signin" class="text-blue-500 hover:underline">Sign In</a>
-  </p>
+		<a
+			href="/signin"
+			class="m-4 block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+			>Have an account? Sign In</a
+		>
+	</div>
 </div>
-

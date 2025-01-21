@@ -1,27 +1,21 @@
 <script>
-	// import { goto } from '@sveltejs/kit';
-
 	let email = '';
 	let password = '';
 	let errorMessage = '';
 	let successMessage = '';
 
-	// Handle sign in form submission
 	async function handleSubmit() {
 		errorMessage = '';
 		successMessage = '';
 
 		const response = await fetch('/api/login', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ email, password })
 		});
 
 		if (response.ok) {
 			successMessage = 'Login successful!';
-			// goto('/dashboard');
 		} else {
 			const data = await response.json();
 			errorMessage = data.error || 'An error occurred';
@@ -29,10 +23,9 @@
 	}
 </script>
 
-<div class="dark mx-auto mt-8 max-w-md rounded bg-gray-900 p-4 text-gray-200 shadow-lg">
+<div class="mx-auto mt-8 max-w-md rounded bg-gray-900 p-4 text-gray-200 shadow-lg">
 	<h2 class="text-center text-2xl font-semibold">Sign In</h2>
 
-	<!-- Display success or error messages -->
 	{#if successMessage}
 		<div class="my-3 rounded bg-green-700 p-3 text-white">{successMessage}</div>
 	{/if}
