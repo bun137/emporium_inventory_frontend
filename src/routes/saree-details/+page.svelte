@@ -1,4 +1,15 @@
+<!-- <script context="module" lang="ts"> -->
+<!-- 	export { load } from './+page.server.js'; // Ensure the load function is exported -->
+<!-- </script> -->
+
 <script>
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+
+	export let data; // Receives the data returned from the load function
+
+	const { user } = data;
+
 	let material = '';
 	let price = '';
 	let inDate = '';
@@ -6,15 +17,41 @@
 	let dyeType = '';
 	let ikatType = '';
 
+	export async function load() {
+		console.log('Load function executed for saree-details');
+		return {};
+	}
+
+	// Redirect if token is not present
+	onMount(() => {
+		const token = localStorage.getItem('token');
+		// console.log('Token in saree-details:', token); // Debugging
+
+		// Redirect to sign-in if no token is found
+		if (!token) {
+			alert('Unauthorized! Please log in.');
+			goto('/'); // Redirect to home
+		}
+	});
+
+	// Handle form submission
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+
+		const token = localStorage.getItem('token'); // Get the stored token
+
 		const response = await fetch('/api/sarees', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}` // Include token in header
+			},
 			body: JSON.stringify({ material, price, inDate, weaver, dyeType, ikatType })
 		});
+
 		if (response.ok) {
 			alert('Saree details submitted successfully!');
+			// Reset fields
 			material = '';
 			price = '';
 			inDate = '';
@@ -33,7 +70,7 @@
 
 		<!-- Material Dropdown -->
 		<div class="mb-4">
-			<label for="material" class="block text-sm font-medium text-gray-300"> Material </label>
+			<label for="material" class="block text-sm font-medium text-gray-300">Material</label>
 			<select
 				id="material"
 				bind:value={material}
@@ -51,7 +88,7 @@
 
 		<!-- Price Input -->
 		<div class="mb-4">
-			<label for="price" class="block text-sm font-medium text-gray-300"> Price </label>
+			<label for="price" class="block text-sm font-medium text-gray-300">Price</label>
 			<input
 				type="number"
 				id="price"
@@ -63,7 +100,7 @@
 
 		<!-- In Date Input -->
 		<div class="mb-4">
-			<label for="inDate" class="block text-sm font-medium text-gray-300"> In Date </label>
+			<label for="inDate" class="block text-sm font-medium text-gray-300">In Date</label>
 			<input
 				type="date"
 				id="inDate"
@@ -75,7 +112,7 @@
 
 		<!-- Weaver Input -->
 		<div class="mb-4">
-			<label for="weaver" class="block text-sm font-medium text-gray-300"> Weaver </label>
+			<label for="weaver" class="block text-sm font-medium text-gray-300">Weaver</label>
 			<input
 				type="text"
 				id="weaver"
@@ -86,7 +123,7 @@
 
 		<!-- Dye Type Dropdown -->
 		<div class="mb-4">
-			<label for="dyeType" class="block text-sm font-medium text-gray-300"> Dye Type </label>
+			<label for="dyeType" class="block text-sm font-medium text-gray-300">Dye Type</label>
 			<select
 				id="dyeType"
 				bind:value={dyeType}
@@ -101,7 +138,7 @@
 
 		<!-- Ikat Type Dropdown -->
 		<div class="mb-4">
-			<label for="ikatType" class="block text-sm font-medium text-gray-300"> Ikat Type </label>
+			<label for="ikatType" class="block text-sm font-medium text-gray-300">Ikat Type</label>
 			<select
 				id="ikatType"
 				bind:value={ikatType}

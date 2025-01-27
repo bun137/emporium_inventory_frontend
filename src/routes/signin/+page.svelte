@@ -1,32 +1,52 @@
 <script>
-	// import { goto } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 
 	let email = '';
 	let password = '';
 	let errorMessage = '';
 	let successMessage = '';
 
-	// Handle sign in form submission
-	async function handleSubmit() {
-		errorMessage = '';
-		successMessage = '';
+	// Handle sign-in form submission
+async function handleSubmit() {
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
 
-		const response = await fetch('/api/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ email, password })
-		});
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Login successful, token:', data.token);
 
-		if (response.ok) {
-			successMessage = 'Login successful!';
-			// goto('/dashboard');
-		} else {
-			const data = await response.json();
-			errorMessage = data.error || 'An error occurred';
-		}
-	}
+            document.cookie = `token=${data.token}; Path=/; SameSite=Strict`;
+
+            const payload = JSON.parse(atob(data.token.split('.')[1]));
+            console.log('Decoded payload:', payload);
+
+            // Debugging roles
+            console.log('User role:', payload.role);
+            console.log('Redirecting...');
+
+            // Redirect based on role
+            if (payload.role === 'admin') {
+                goto('/admin'); // Redirect to admin dashboard
+            } else if (payload.role === 'user') {
+                goto('/saree-details'); // Redirect to user page
+            } else {
+                console.error('Unknown role, staying on the login page.');
+                errorMessage = 'Unauthorized access. Please contact support.';
+            }
+        } else {
+            const data = await response.json();
+            console.error('Login error:', data.error);
+            errorMessage = data.error || 'An error occurred during login.';
+        }
+    } catch (error) {
+        console.error('Unexpected error:', error);
+        errorMessage = 'Unable to connect to the server. Please try again later.';
+    }
+}
 </script>
 
 <div class="dark mx-auto mt-8 max-w-md rounded bg-gray-900 p-4 text-gray-200 shadow-lg">
