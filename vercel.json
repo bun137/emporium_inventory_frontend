@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://pesurf-precision3660.saola-banana.ts.net/:match*"
+    }
+  ]
+}
