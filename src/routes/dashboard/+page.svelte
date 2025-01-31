@@ -28,7 +28,7 @@
 		}
 
 		try {
-			const response = await fetch('http://localhost:3000/api/validate-token', {
+			const response = await fetch('/api/validate-token', {
 				method: 'GET',
 				headers: {
 					Authorization: `Bearer ${token}`,

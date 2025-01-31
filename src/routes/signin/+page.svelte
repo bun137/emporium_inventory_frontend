@@ -7,7 +7,7 @@
 
 	async function handleSubmit() {
 		try {
-			const response = await fetch('http://localhost:3000/api/login', {
+			const response = await fetch('/api/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ email, password })
@@ -26,7 +26,7 @@
 				console.log('Decoded payload:', payload);
 
 				// Fetch user's current approval status
-				const approvalResponse = await fetch('http://localhost:3000/api/validate-token', {
+				const approvalResponse = await fetch('/api/validate-token', {
 					method: 'GET',
 					headers: {
 						Authorization: `Bearer ${data.token}`,

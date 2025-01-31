@@ -15,7 +15,7 @@
 		}
 
 		try {
-			const response = await fetch('http://localhost:3000/api/validate-token', {
+			const response = await fetch('/api/validate-token', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Cache-Control': 'no-cache'
@@ -50,7 +50,7 @@
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/api/admin/users', {
+			const response = await fetch('http://localhost:7575/api/admin/users', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Cache-Control': 'no-cache'
@@ -82,7 +82,7 @@
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/api/admin/approvedUsers', {
+			const response = await fetch('/api/admin/approvedUsers', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Cache-Control': `no-cache`
@@ -123,7 +123,7 @@
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/api/admin/approve-user', {
+			const response = await fetch('/api/admin/approve-user', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -160,7 +160,7 @@
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/api/admin/revoke-user', {
+			const response = await fetch('/api/admin/revoke-user', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
