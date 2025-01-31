@@ -34,10 +34,9 @@
 // }
 import { redirect } from '@sveltejs/kit';
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load({ cookies }) {
 	const token = cookies.get('token');
-	console.log('Token in cookies:', token); // Debugging
+	console.log('Token in cookies:', token);
 
 	if (!token) {
 		console.error('No token found in cookies.');

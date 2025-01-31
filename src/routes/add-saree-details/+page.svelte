@@ -1,12 +1,8 @@
-<!-- <script context="module" lang="ts"> -->
-<!-- 	export { load } from './+page.server.js'; // Ensure the load function is exported -->
-<!-- </script> -->
-
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
-	export let data; // Receives the data returned from the load function
+	export let data;
 
 	const { user } = data;
 
@@ -25,7 +21,7 @@
 	// Redirect if token is not present
 	onMount(() => {
 		const token = localStorage.getItem('token');
-		// console.log('Token in saree-details:', token); // Debugging
+		// console.log('Token in saree-details:', token);
 
 		// Redirect to sign-in if no token is found
 		if (!token) {
@@ -34,24 +30,22 @@
 		}
 	});
 
-	// Handle form submission
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		const token = localStorage.getItem('token'); // Get the stored token
+		const token = localStorage.getItem('token');
 
 		const response = await fetch('/api/sarees', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}` // Include token in header
+				Authorization: `Bearer ${token}`
 			},
 			body: JSON.stringify({ material, price, inDate, weaver, dyeType, ikatType })
 		});
 
 		if (response.ok) {
 			alert('Saree details submitted successfully!');
-			// Reset fields
 			material = '';
 			price = '';
 			inDate = '';
@@ -68,7 +62,6 @@
 	<form on:submit={handleSubmit} class="w-full max-w-lg rounded-lg bg-gray-800 p-8 shadow-md">
 		<h2 class="mb-6 text-center text-2xl font-bold text-white">Add Saree Details</h2>
 
-		<!-- Material Dropdown -->
 		<div class="mb-4">
 			<label for="material" class="block text-sm font-medium text-gray-300">Material</label>
 			<select
@@ -86,7 +79,6 @@
 			</select>
 		</div>
 
-		<!-- Price Input -->
 		<div class="mb-4">
 			<label for="price" class="block text-sm font-medium text-gray-300">Price</label>
 			<input
@@ -98,7 +90,6 @@
 			/>
 		</div>
 
-		<!-- In Date Input -->
 		<div class="mb-4">
 			<label for="inDate" class="block text-sm font-medium text-gray-300">In Date</label>
 			<input
@@ -110,7 +101,6 @@
 			/>
 		</div>
 
-		<!-- Weaver Input -->
 		<div class="mb-4">
 			<label for="weaver" class="block text-sm font-medium text-gray-300">Weaver</label>
 			<input
@@ -121,7 +111,6 @@
 			/>
 		</div>
 
-		<!-- Dye Type Dropdown -->
 		<div class="mb-4">
 			<label for="dyeType" class="block text-sm font-medium text-gray-300">Dye Type</label>
 			<select
@@ -136,7 +125,6 @@
 			</select>
 		</div>
 
-		<!-- Ikat Type Dropdown -->
 		<div class="mb-4">
 			<label for="ikatType" class="block text-sm font-medium text-gray-300">Ikat Type</label>
 			<select
@@ -150,7 +138,6 @@
 			</select>
 		</div>
 
-		<!-- Submit Button -->
 		<button
 			type="submit"
 			class="w-full rounded-lg bg-sky-600 px-4 py-2 text-white shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
