@@ -6,7 +6,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'https://pesurf-precision3660.saola-banana.ts.net:7575',
+				target: 'https://pesurf-precision3660.saola-banana.ts.net',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, '/api')
 			}
