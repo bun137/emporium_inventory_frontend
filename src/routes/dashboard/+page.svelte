@@ -9,13 +9,13 @@
 		{
 			title: 'Add Saree Details',
 			description: 'Click to add saree details',
-			href: '/add-saree-details',
+			href: '../add-saree-details',
 			image: '/images/saree1.jpeg'
 		},
 		{
 			title: 'View Saree Inventory',
 			description: 'Browse and manage your current saree inventory.',
-			href: '/view-saree-inventory',
+			href: '../view-saree-inventory',
 			image: '/images/saree2.jpeg'
 		}
 	];
@@ -43,8 +43,6 @@
 
 				if (!data.isApproved) {
 					goto('/pending-approval');
-				} else if (data.role === 'admin') {
-					goto('/admin');
 				}
 			} 
 			
