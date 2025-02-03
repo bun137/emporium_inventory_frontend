@@ -23,7 +23,7 @@
 		const token = localStorage.getItem('token');
 		console.log('Token in saree-details:', token);
 
-		Redirect to sign-in if no token is found
+		// Redirect to sign-in if no token is found
 		if (!token) {
 			alert('Unauthorized! Please log in.');
 			goto('/'); // Redirect to home
