@@ -50,7 +50,7 @@
 				return;
 			}
 
-			const response = await fetch('http://localhost:7575/api/admin/users', {
+			const response = await fetch('/api/admin/users', {
 				headers: {
 					Authorization: `Bearer ${token}`,
 					'Cache-Control': 'no-cache'
