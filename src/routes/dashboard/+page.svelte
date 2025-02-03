@@ -46,9 +46,8 @@
 				} else if (data.role === 'admin') {
 					goto('/admin');
 				}
-			} else {
-				goto('/signin');
-			}
+			} 
+			
 		} catch (error) {
 			console.error('Error validating token:', error);
 			errorMessage = 'Unable to verify user status. Please try again later.';
