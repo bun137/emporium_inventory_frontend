@@ -16,7 +16,7 @@
 
 		try {
 			const res = await fetch('/api/validate-token', {
-				headers: { Authoriation: `Bearer ${token}` }
+				headers: { Authorization: `Bearer ${token}` }
 			});
 
 			if (!res.ok) {
